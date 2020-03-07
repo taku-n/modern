@@ -41,6 +41,24 @@ int main(int argc, char *argv[], char *envp[])
 
 	printf("%d\n", push(&stack_range, 42));
 
+	// Odd Even Range Validator
+
+	OddEvenRangeValidator odd_even_range_validator = {{{validate_odd_even_range}, 0, 9}, true};
+
+	int buf_odd_even_range[4];
+	Stack stack_odd_even_range
+			= {0, sizeof(buf_odd_even_range) / sizeof(int), buf_odd_even_range,
+			&odd_even_range_validator.base.base};  // 型を合わせるための工夫
+
+	push(&stack_odd_even_range, 1);
+	push(&stack_odd_even_range, 2);
+	push(&stack_odd_even_range, 3);
+
+	pop(&stack_odd_even_range, &ret);
+	printf("poped => %d\n", ret);  //=> 3
+	pop(&stack_odd_even_range, &ret);
+	printf("poped => %d\n", ret);  //=> 1
+
 	// Prev Validator
 
 	PrevValidator prev_validator = {{validate_prev}, 0};

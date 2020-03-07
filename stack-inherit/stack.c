@@ -3,6 +3,8 @@
 bool is_stack_full(Stack *stack);
 bool is_stack_empty(Stack *stack);
 bool validate(Validator *validator, int val);
+bool is_odd(int x);
+bool is_even(int x);
 
 bool push(Stack *stack, int val)
 {
@@ -55,8 +57,37 @@ bool validate_range(Validator *base, int val)
 	return self->min <= val && val <= self->max;
 }
 
+bool validate_odd_even_range(Validator *base, int val)
+{
+	// 構造体の最初のメンバへのポインタは，構造体へのポインタと同じ
+	OddEvenRangeValidator *self = (OddEvenRangeValidator *)base;
+
+	if (self->odd_mode == true) {
+		if (!is_odd(val)) {
+			return false;
+		}
+	} else {
+		if (!is_even(val)) {
+			return false;
+		}
+	}
+
+	return self->base.min <= val && val <= self->base.max;
+}
+
+bool is_odd(int x)
+{
+	return x % 2 == 1;
+}
+
+bool is_even(int x)
+{
+	return x % 2 == 0;
+}
+
 bool validate_prev(Validator *base, int val)
 {
+	// 構造体の最初のメンバへのポインタは，構造体へのポインタと同じ
 	PrevValidator *self = (PrevValidator *)base;
 
 	if (val < self->prev_val) {

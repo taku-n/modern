@@ -22,6 +22,11 @@ typedef struct {
 } RangeValidator;
 
 typedef struct {
+	RangeValidator base;
+	bool odd_mode;
+} OddEvenRangeValidator;
+
+typedef struct {
 	Validator base;
 	int prev_val;
 } PrevValidator;
@@ -30,6 +35,7 @@ bool push(Stack *stack, int val);  // true => success, false => failure
 bool pop(Stack *stack, int *ret);  // true => success, false => failure
 
 bool validate_range(Validator *self, int val);
+bool validate_odd_even_range(Validator *self, int val);
 bool validate_prev(Validator *self, int val);
 
 #endif  // STACK_H
