@@ -47,21 +47,22 @@ bool validate(Validator *validator, int val)
 	return validator->validate(validator, val);
 }
 
-bool validate_range(Validator *self, int val)
+bool validate_range(Validator *base, int val)
 {
-	Range *range = (Range *)(self->data);
+	// 構造体の最初のメンバへのポインタは，構造体へのポインタと同じ
+	RangeValidator *self = (RangeValidator *)base;
 
-	return range->min <= val && val <= range->max;
+	return self->min <= val && val <= self->max;
 }
 
-bool validate_prev(Validator *self, int val)
+bool validate_prev(Validator *base, int val)
 {
-	Prev *prev = (Prev *)self->data;
+	PrevValidator *self = (PrevValidator *)base;
 
-	if (val < prev->prev_val) {
+	if (val < self->prev_val) {
 		return false;
 	}
-	prev->prev_val = val;
+	self->prev_val = val;
 
 	return true;
 }
